@@ -9,7 +9,6 @@ interface ModalProps {
   onClose: () => void;
   title?: string;
   children: ReactNode;
-  actions?: ReactNode;
   size?: "sm" | "md" | "lg" | "xl";
 }
 
@@ -25,7 +24,6 @@ export default function Modal({
   onClose,
   title,
   children,
-  actions,
   size = "lg"
 }: ModalProps) {
   if (!isOpen) return null;
@@ -38,9 +36,10 @@ export default function Modal({
       onClick={onClose}
     >
       <div
-        className={`relative bg-white rounded-lg shadow-xl w-full ${sizeMap[size]} max-h-[90vh] overflow-y-auto p-8`}
+        className={`relative bg-white rounded-lg shadow-xl w-full ${sizeMap[size]} max-h-[90vh] flex flex-col`}
         onClick={stop}
       >
+        {/* Close button */}
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition-colors"
@@ -49,14 +48,22 @@ export default function Modal({
           <FontAwesomeIcon icon={faXmark} size="2x" />
         </button>
 
-        {(title || actions) && (
-          <div className="flex items-center justify-between mb-6 mt-10">
-            {title && <h2 className="text-3xl font-bold text-gray-800">{title}</h2>}
-            {actions && <div className="flex gap-2">{actions}</div>}
+        {/* Header (not scrollable) */}
+        {title && (
+          <div className="flex items-center justify-between px-8 pt-8 pb-4 mb-4 border-b">
+            {title && (
+              <h2 className="text-3xl font-bold text-gray-800">{title}</h2>
+            )}
           </div>
         )}
 
-        {children}
+        {/* Scrollable content */}
+        <div
+          className="flex-1 overflow-y-auto px-8 pb-8"
+          style={{ WebkitOverflowScrolling: "touch" }}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );

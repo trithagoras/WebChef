@@ -45,15 +45,14 @@ export default function ShoppingListModal({
       isOpen={showModal}
       onClose={closeModal}
       title="Shopping List"
-      actions={
-        <button
-          onClick={() => handleCopy(undefined)}
-          className="bg-yellow-500 text-white p-2 rounded-lg hover:bg-yellow-600 transition-all duration-300"
-        >
-          <FontAwesomeIcon icon={faClipboard} />
-        </button>
-      }
     >
+      <button
+        onClick={() => handleCopy(undefined)}
+        className="bg-yellow-500 text-white p-2 pr-4 rounded-lg hover:bg-yellow-600 transition-all duration-300"
+        >
+        <FontAwesomeIcon icon={faClipboard} />
+        Copy all
+      </button>
       <ul className="space-y-2">
         {/* staples */}
         <div className="flex flex-row mb-3 mt-8 justify-between">
