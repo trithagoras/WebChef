@@ -1,19 +1,29 @@
 'use client'
 import { faCheck, faClipboard, faEdit, faUndo, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { masterQuery } from "../framework/schema";
 import fakeData from '../framework/fakeData';
 import toast from "react-hot-toast";
 import Skeleton from "react-loading-skeleton";
 import { match } from "ts-pattern";
 import { jsonLanguage } from "@codemirror/lang-json";
-import ReactCodeMirror from "@uiw/react-codemirror";
+import ReactCodeMirror, { EditorView } from "@uiw/react-codemirror";
 
 interface EditableTextBlockProps {
   mode: 'json' | 'textArea',
   onSave?: (value: string) => void
 }
+
+const editableTheme = EditorView.theme({
+  ".cm-scroller": { backgroundColor: "#ffffff" },
+  ".cm-gutters": { backgroundColor: "#ffffff" }
+}, { dark: false });
+
+const readOnlyTheme = EditorView.theme({
+  ".cm-scroller": { backgroundColor: "#e5e7eb" }, // tailwind gray-200
+  ".cm-gutters": { backgroundColor: "#e5e7eb" }
+}, { dark: false });
 
 const EditableTextBlock = ({ mode, onSave }: EditableTextBlockProps) => {
   const [text, setText] = useState('');
@@ -93,6 +103,13 @@ const EditableTextBlock = ({ mode, onSave }: EditableTextBlockProps) => {
     }
   }, [localStorageKey, mode, text]);
 
+  // code mirror extensions
+  const extensions = useMemo(() => [
+    jsonLanguage.extension,
+    isEditing ? editableTheme : readOnlyTheme,
+    EditorView.editable.of(!!isEditing)
+  ], [isEditing]);
+
   if (!init) {
     return <Skeleton count={6} />
   }
@@ -148,7 +165,7 @@ const EditableTextBlock = ({ mode, onSave }: EditableTextBlockProps) => {
       value={text}
       height="200px"
       onChange={setText}
-      extensions={[jsonLanguage.extension]}
+      extensions={extensions}
       readOnly={!isEditing}
       className="flex-1 min-w-0 w-full bg-white text-sm border border-gray-300 rounded-lg shadow-md"
     />)
