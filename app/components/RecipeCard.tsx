@@ -45,10 +45,15 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
         <>
             <div 
                 onClick={openModal}
-                className="my-5 p-6 bg-white rounded-lg shadow-md max-w-2xl mx-auto cursor-pointer hover:shadow-xl transition-shadow duration-300"
-            >
-                <h2 className="text-2xl font-semibold text-gray-800 mb-2">{recipe.name}</h2>
-                <p className="text-gray-500">Click to view the full recipe...</p>
+                className="p-6 bg-white rounded-2xl shadow-md cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                >
+                <h2 className="text-xl font-bold text-gray-800 mb-3">{recipe.name}</h2>
+                <div className="flex flex-wrap gap-3 text-sm text-gray-600">
+                    <span>{recipe.calories} kcal</span>
+                    <span>{recipe.protein} g P</span>
+                    <span>{recipe.carbs} g C</span>
+                    <span>{recipe.fat} g F</span>
+                </div>
             </div>
 
             {isModalOpen && (

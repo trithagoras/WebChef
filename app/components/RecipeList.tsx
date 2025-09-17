@@ -48,8 +48,8 @@ const RecipeList = () => {
       amount: getAmounts(n),
       isStaple: isStaple(n)
     }))
-    .sort((a, b) => a.name.localeCompare(b.name))
-    .sort((a, b) => Number(b.isStaple) - Number(a.isStaple));
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .sort((a, b) => Number(b.isStaple) - Number(a.isStaple));
   }, []);
 
   const onSaveJson = useCallback((value: string) => {
@@ -80,16 +80,20 @@ const RecipeList = () => {
 
   return (
     <div>
-      <EditableTextBlock mode="json" onSave={onSaveJson} />
-      <div className="flex flex-row ml-10">
+      <div className="bg-gray-200 p-6 rounded-lg shadow-lg">
+        <EditableTextBlock mode="json" onSave={onSaveJson} />
+      </div>
+      <div className="flex flex-row ml-10 justify-center">
         {showShoppingListButton && (
-          <button
-            onClick={() => setShowShoppingListModal(true)}
-            className="mt-4 bg-gray-400 text-white px-6 py-2 rounded-lg hover:bg-gray-500 transition-all duration-300"
-          >
-            <FontAwesomeIcon icon={faList} className="mr-2" />
-            Shopping list
-          </button>
+          <div className="flex justify-center my-6">
+            <button
+              onClick={() => setShowShoppingListModal(true)}
+              className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-green-600 text-white text-xl font-bold shadow-lg hover:bg-green-700 hover:scale-105 active:scale-95 transition-all duration-200"
+            >
+              <FontAwesomeIcon icon={faList} className="text-2xl" />
+              Shopping List
+            </button>
+          </div>
         )}
       </div>
       {showShoppingListButton ? (
@@ -99,9 +103,11 @@ const RecipeList = () => {
             setShowModal={setShowShoppingListModal}
             shoppingList={shoppingList}
           />
-          {recipes.map(r => (
-            <RecipeCard key={r.name} recipe={r} />
-          ))}
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-6">
+            {recipes.map(r => (
+              <RecipeCard key={r.name} recipe={r} />
+            ))}
+          </div>
         </>
       ) : (
         <small className="ml-10">

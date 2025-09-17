@@ -150,7 +150,7 @@ const EditableTextBlock = ({ mode, onSave }: EditableTextBlockProps) => {
       onChange={setText}
       extensions={[jsonLanguage.extension]}
       readOnly={!isEditing}
-      className={`w-full p-4 bg-white read-only:bg-gray-200 text-sm border border-gray-300 rounded-lg shadow-md resize-none focus:ring-2 focus:ring-blue-500 focus:outline-none ${isEditing ? '' : 'readOnly'}`}
+      className="w-3xl bg-white read-only:bg-gray-200 text-sm border border-gray-300 rounded-lg shadow-md resize-none focus:ring-2 focus:ring-blue-500 focus:outline-none"
     />)
     .exhaustive();
 
