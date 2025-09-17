@@ -14,6 +14,14 @@ export interface Recipe {
     steps: string[]
 }
 
+export interface ShoppingListItem {
+  name: string,
+  amount: {
+    amount: number,
+    unit: string
+  }
+}
+
 export const masterQuery = `Generate 5 cheap & healthy dinner ideas (for 2 ppl). Criteria:
 - ~500-800 kcal/serving
 - Include solid protein source (preferred meats: beef, chicken, pork, fish, tofu; turkey mince OK; veg OK)
