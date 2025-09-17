@@ -3,7 +3,7 @@
 import { useState, useCallback, useEffect } from "react";
 import toast from "react-hot-toast";
 import { Recipe } from "../framework/schema";
-import data from "../framework/fakeData";
+import fakeData from "../framework/fakeData";
 import { jsonLanguage } from "@codemirror/lang-json";
 import ReactCodeMirror from "@uiw/react-codemirror";
 import RecipeCard from "./RecipeCard";
@@ -11,8 +11,16 @@ import ShoppingListModal from "./ShoppingListModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faList } from "@fortawesome/free-solid-svg-icons";
 
+const localStorageKey = 'recipesJson';
+
 const RecipeList = () => {
-    const [json, setJson] = useState<string>(data);
+    const [json, setJson] = useState<string>(() => {
+      if (typeof window !== "undefined") {
+        const data = localStorage.getItem(localStorageKey);
+        return data ?? fakeData;
+      }
+      return fakeData;
+    });
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [showShoppingListModal, setShowShoppingListModal] = useState(false);
     const [shoppingList, setShoppingList] = useState<{
@@ -60,6 +68,7 @@ const RecipeList = () => {
         try {
             setRecipes(JSON.parse(json));
             setIsDirty(false);
+            localStorage.setItem(localStorageKey, json);
         } catch (e) {
             console.log(e);
             toast.error(<div>
@@ -108,7 +117,7 @@ const RecipeList = () => {
             <ShoppingListModal showModal={showShoppingListModal} setShowModal={setShowShoppingListModal} shoppingList={shoppingList} />
             {recipes.map(r => <RecipeCard key={r.name} recipe={r} />)}
           </>
-          : <small className="ml-10">Click &apos;Update&apos; to save changes.</small>}
+          : <small className="ml-10">Click &apos;Update&apos; to save changes. This will override any existing saved value in your browser.</small>}
     </div>
 };
 

@@ -2,7 +2,6 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Dispatch, SetStateAction } from "react";
 
-
 interface ShoppingListModalProps {
     showModal: boolean,
     setShowModal: Dispatch<SetStateAction<boolean>>,
