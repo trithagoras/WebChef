@@ -47,7 +47,9 @@ const RecipeList = () => {
       name: n,
       amount: getAmounts(n),
       isStaple: isStaple(n)
-    })).sort((a, b) => Number(b.isStaple) - Number(a.isStaple));
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .sort((a, b) => Number(b.isStaple) - Number(a.isStaple));
   }, []);
 
   const onSaveJson = useCallback((value: string) => {
