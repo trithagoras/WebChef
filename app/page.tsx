@@ -23,7 +23,7 @@ export default function Home() {
                 <FontAwesomeIcon icon={faUpRightFromSquare} />
                 ChatGPT
               </a>
-              . Paste the resulting JSON into the code box below and click &apos;Update&apos;.
+              . Paste the resulting JSON into the code box below and save changes.
             </p>
           </div>
         </div>
