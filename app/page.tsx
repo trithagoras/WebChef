@@ -2,6 +2,7 @@ import RecipeList from "./components/RecipeList";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import EditableTextBlock from "./components/EditableTextBlock";
+import { CookingModeProvider } from "./components/CookingModeContext";
 
 export default function Home() {
   return (
@@ -27,7 +28,9 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <RecipeList />
+      <CookingModeProvider>
+        <RecipeList />
+      </CookingModeProvider>
     </div>
   );
 }
