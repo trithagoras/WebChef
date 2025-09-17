@@ -24,9 +24,12 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
 
             <h3 className="text-xl font-semibold text-gray-800 mb-2">Ingredients</h3>
             <ul className="list-disc list-inside text-gray-700 mb-6 space-y-2">
-                {recipe.ingredients.map(i => (
+                {recipe.ingredients
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .sort((a, b) => Number(b.isStaple) - Number(a.isStaple))
+                    .map(i => (
                     <li key={i.name} className="flex justify-between items-center">
-                        <span>{i.name}</span>
+                        <span className={i.isStaple ? "font-bold" : "font-medium"}>{i.name}</span>
                         <span>{i.amount} {i.unit}</span>
                     </li>
                 ))}
@@ -43,10 +46,10 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
 
     return (
         <>
-            <div 
+            <div
                 onClick={openModal}
                 className="p-6 bg-white rounded-2xl shadow-md cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-                >
+            >
                 <h2 className="text-xl font-bold text-gray-800 mb-3">{recipe.name}</h2>
                 <div className="flex flex-wrap gap-3 text-sm text-gray-600">
                     <span>{recipe.calories} kcal</span>
@@ -57,7 +60,7 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
             </div>
 
             {isModalOpen && (
-                <div 
+                <div
                     className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50 p-4"
                     onClick={closeModal}
                 >
@@ -72,7 +75,7 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
                         >
                             <FontAwesomeIcon icon={faXmark} size="2x" />
                         </button>
-                        
+
                         <h2 className="text-3xl font-bold text-gray-800 mb-6">{recipe.name}</h2>
                         <RecipeDetails />
                     </div>
