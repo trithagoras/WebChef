@@ -6,7 +6,9 @@ import EditableTextBlock from "./components/EditableTextBlock";
 export default function Home() {
   return (
     <div className="min-h-screen bg-gray-100 p-6 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold text-center mb-6">Chefs of Waverley Road</h1>
+      <h1 className="text-3xl font-bold text-center mb-6">
+        ✨ VibeChef ✨
+      </h1>
       <div className="mb-6">
         <h2 className="text-xl font-semibold mb-2">Master Query</h2>
         <div className="bg-gray-200 p-6 rounded-lg shadow-lg">

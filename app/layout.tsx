@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "WebChef",
+  title: "VibeChef",
   description: "A simple recipe management site",
 };
 
