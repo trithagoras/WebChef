@@ -12,6 +12,8 @@ export interface Recipe {
     carbs: number,
     fat: number,
     calories: number,
+    prepTime: string,
+    totalTime: string,
     steps: string[]
 }
 
@@ -29,6 +31,7 @@ export const masterQuery = `Generate 5 cheap & healthy dinner ideas (for 2 ppl).
 - Include solid protein source (preferred meats: beef, chicken, pork, fish, tofu; turkey mince OK; veg OK)
 - Balanced macros (P, C, F)
 - Est. macros/serving (P, C, F in g, kcal)
+- Est. prep & total time to make meal (as a string, e.g. '30 minutes', '1 hour', etc.)
 - Avoid rare/1-use/expensive ingredients
 
 Output JSON only:
@@ -40,6 +43,8 @@ Output JSON only:
     carbs: number,
     fat: number,
     calories: number,
+    prepTime: string,
+    totalTime: string,
     steps: [string]
   }
 ]

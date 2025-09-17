@@ -1,5 +1,7 @@
 import { Recipe } from "../framework/schema";
 import { Dispatch, SetStateAction } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClock } from "@fortawesome/free-solid-svg-icons";
 import { useCookingMode } from "./CookingModeContext";
 import Modal from "./Modal";
 
@@ -27,6 +29,11 @@ const RecipeModal = ({ recipe, isModalOpen, setIsModalOpen }: RecipeModalProps) 
             <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-blue-600 after:absolute after:top-[2px] after:start-[2px] after:w-5 after:h-5 after:bg-white after:rounded-full after:transition-all peer-checked:after:translate-x-full"></div>
             <span className="ms-3 text-sm font-medium text-gray-900">Cooking mode</span>
         </label>
+
+        <div className="gap-3 text-sm text-gray-600 mb-4">
+          <p>Prep <FontAwesomeIcon icon={faClock} /> : {recipe.prepTime}</p>
+          <p>Total <FontAwesomeIcon icon={faClock} /> : {recipe.totalTime}</p>
+        </div>
 
         <div className="text-gray-700 mb-4">
             <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-600">
