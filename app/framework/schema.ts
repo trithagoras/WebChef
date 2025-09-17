@@ -26,7 +26,6 @@ export const masterQuery = `Generate 5 cheap & healthy dinner ideas (for 2 ppl).
 - ~500-800 kcal/serving
 - Include solid protein source (preferred meats: beef, chicken, pork, fish, tofu; turkey mince OK; veg OK)
 - Balanced macros (P, C, F)
-- Est. cost (AUD, 2025) for 2 servings
 - Est. macros/serving (P, C, F in g, kcal)
 - Avoid rare/1-use/expensive ingredients
 
