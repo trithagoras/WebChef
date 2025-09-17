@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useCallback, useEffect } from "react";
-import { Recipe } from "../framework/schema";
+import { Recipe, ShoppingListItem } from "../framework/schema";
 import RecipeCard from "./RecipeCard";
 import ShoppingListModal from "./ShoppingListModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,9 +13,7 @@ import Skeleton from "react-loading-skeleton";
 const RecipeList = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [showShoppingListModal, setShowShoppingListModal] = useState(false);
-  const [shoppingList, setShoppingList] = useState<
-    { name: string; amount: { amount: number; unit: string }[] }[]
-  >([]);
+  const [shoppingList, setShoppingList] = useState<ShoppingListItem[]>([]);
   const [init, setInit] = useState(false);
 
   const makeShoppingList = useCallback((recipes: Recipe[]) => {
@@ -42,10 +40,14 @@ const RecipeList = () => {
       ...new Set(recipes.flatMap(r => r.ingredients.map(i => i.name))),
     ];
 
+    // jank
+    const isStaple = (n: string) => recipes.flatMap(r => r.ingredients).find(i => i.name === n)?.isStaple ?? false;
+
     return distinctIngredientNames.map(n => ({
       name: n,
       amount: getAmounts(n),
-    }));
+      isStaple: isStaple(n)
+    })).sort((a, b) => Number(b.isStaple) - Number(a.isStaple));
   }, []);
 
   const onSaveJson = useCallback((value: string) => {

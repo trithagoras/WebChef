@@ -2,124 +2,125 @@
 
 const fakeData = `[
   {
-    "name": "Spaghetti with Turkey Bolognese",
+    "name": "Chicken Veggie Stir-Fry with Rice",
     "ingredients": [
-      { "name": "Turkey mince", "amount": 300, "unit": "grams" },
-      { "name": "Canned diced tomatoes", "amount": 400, "unit": "grams" },
-      { "name": "Spaghetti", "amount": 150, "unit": "grams" },
-      { "name": "Onion", "amount": 1, "unit": "medium" },
-      { "name": "Garlic", "amount": 2, "unit": "cloves" },
-      { "name": "Olive oil", "amount": 1, "unit": "tablespoon" },
-      { "name": "Dried oregano", "amount": 1, "unit": "teaspoon" },
-      { "name": "Salt", "amount": 0.5, "unit": "teaspoon" },
-      { "name": "Black pepper", "amount": 0.25, "unit": "teaspoon" }
+      { "name": "chicken breast", "isStaple": false, "amount": 300, "unit": "g" },
+      { "name": "brown rice (dry)", "isStaple": false, "amount": 150, "unit": "g" },
+      { "name": "broccoli", "isStaple": false, "amount": 200, "unit": "g" },
+      { "name": "carrot", "isStaple": false, "amount": 150, "unit": "g" },
+      { "name": "soy sauce", "isStaple": true, "amount": 2, "unit": "tbsp" },
+      { "name": "vegetable oil", "isStaple": true, "amount": 2, "unit": "tbsp" },
+      { "name": "garlic", "isStaple": true, "amount": 2, "unit": "cloves" }
     ],
-    "protein": 35,
+    "protein": 46,
+    "carbs": 72,
+    "fat": 15,
+    "calories": 630,
+    "steps": [
+      "Cook rice according to package instructions.",
+      "Heat oil in a pan, add minced garlic and cook 1 minute.",
+      "Add diced chicken and stir-fry until cooked through.",
+      "Add chopped broccoli and sliced carrot, stir-fry 5 minutes.",
+      "Stir in soy sauce, cook 2 more minutes.",
+      "Serve chicken stir-fry over rice."
+    ]
+  },
+  {
+    "name": "Turkey Chili with Beans",
+    "ingredients": [
+      { "name": "turkey mince", "isStaple": false, "amount": 300, "unit": "g" },
+      { "name": "kidney beans (canned, drained)", "isStaple": false, "amount": 240, "unit": "g" },
+      { "name": "onion", "isStaple": false, "amount": 1, "unit": "medium" },
+      { "name": "tomato (canned, crushed)", "isStaple": false, "amount": 400, "unit": "g" },
+      { "name": "chili powder", "isStaple": true, "amount": 1, "unit": "tbsp" },
+      { "name": "vegetable oil", "isStaple": true, "amount": 1, "unit": "tbsp" },
+      { "name": "salt", "isStaple": true, "amount": 1, "unit": "tsp" }
+    ],
+    "protein": 45,
     "carbs": 55,
-    "fat": 18,
+    "fat": 16,
     "calories": 620,
     "steps": [
-      "Cook spaghetti according to package instructions.",
-      "Heat oil in a pan and sauté chopped onion for 5 minutes.",
-      "Add minced garlic and cook 2 more minutes.",
-      "Add turkey mince and cook until browned.",
-      "Add diced tomatoes, oregano, salt, and pepper. Simmer for 15 minutes.",
-      "Serve sauce over drained spaghetti."
-    ]
-  },
-  {
-    "name": "Lentil and Sweet Potato Curry",
-    "ingredients": [
-      { "name": "Red lentils", "amount": 150, "unit": "grams" },
-      { "name": "Sweet potato", "amount": 300, "unit": "grams" },
-      { "name": "Onion", "amount": 1, "unit": "medium" },
-      { "name": "Garlic", "amount": 2, "unit": "cloves" },
-      { "name": "Coconut milk", "amount": 200, "unit": "ml" },
-      { "name": "Curry powder", "amount": 1, "unit": "tablespoon" },
-      { "name": "Olive oil", "amount": 1, "unit": "tablespoon" },
-      { "name": "Salt", "amount": 0.5, "unit": "teaspoon" }
-    ],
-    "protein": 22,
-    "carbs": 60,
-    "fat": 20,
-    "calories": 640,
-    "steps": [
       "Heat oil in a pot and sauté chopped onion for 5 minutes.",
-      "Add minced garlic and curry powder and sauté 2 minutes.",
-      "Add diced sweet potato and stir for 2 minutes.",
-      "Add lentils and coconut milk plus 1 cup of water.",
-      "Simmer for 20–25 minutes until sweet potato and lentils are tender.",
-      "Season with salt and serve."
+      "Add turkey mince and cook until browned.",
+      "Add chili powder and salt, stir 1 minute.",
+      "Add canned tomato and beans, stir well.",
+      "Simmer 20 minutes on low heat.",
+      "Serve hot."
     ]
   },
   {
-    "name": "Stir-Fried Pork and Veggies with Rice Noodles",
+    "name": "Tofu Vegetable Curry with Rice",
     "ingredients": [
-      { "name": "Pork mince", "amount": 250, "unit": "grams" },
-      { "name": "Rice noodles", "amount": 150, "unit": "grams" },
-      { "name": "Carrot", "amount": 1, "unit": "medium" },
-      { "name": "Zucchini", "amount": 1, "unit": "medium" },
-      { "name": "Soy sauce", "amount": 2, "unit": "tablespoons" },
-      { "name": "Garlic", "amount": 2, "unit": "cloves" },
-      { "name": "Olive oil", "amount": 1, "unit": "tablespoon" }
+      { "name": "firm tofu", "isStaple": false, "amount": 300, "unit": "g" },
+      { "name": "onion", "isStaple": false, "amount": 1, "unit": "medium" },
+      { "name": "frozen peas", "isStaple": false, "amount": 150, "unit": "g" },
+      { "name": "carrot", "isStaple": false, "amount": 150, "unit": "g" },
+      { "name": "coconut milk (light)", "isStaple": false, "amount": 200, "unit": "ml" },
+      { "name": "curry powder", "isStaple": true, "amount": 1, "unit": "tbsp" },
+      { "name": "brown rice (dry)", "isStaple": false, "amount": 150, "unit": "g" },
+      { "name": "vegetable oil", "isStaple": true, "amount": 1, "unit": "tbsp" }
     ],
-    "protein": 30,
-    "carbs": 50,
+    "protein": 28,
+    "carbs": 78,
     "fat": 22,
-    "calories": 650,
+    "calories": 690,
     "steps": [
-      "Cook rice noodles according to package instructions and drain.",
-      "Heat oil in a wok and cook pork mince until browned.",
-      "Add minced garlic and cook 2 more minutes.",
-      "Add sliced carrot and zucchini and stir-fry 5 minutes.",
-      "Add soy sauce and cooked noodles. Toss well and cook 2 more minutes."
+      "Cook rice according to package instructions.",
+      "Heat oil in a pot, sauté chopped onion 5 minutes.",
+      "Add diced carrot and cook 5 minutes.",
+      "Add curry powder, stir 1 minute.",
+      "Add diced tofu, peas, and coconut milk.",
+      "Simmer 10 minutes, stirring occasionally.",
+      "Serve curry with rice."
     ]
   },
   {
-    "name": "Beef and Bean Burrito Bowls",
+    "name": "Beef and Veggie Pasta",
     "ingredients": [
-      { "name": "Lean beef mince", "amount": 250, "unit": "grams" },
-      { "name": "Brown rice", "amount": 120, "unit": "grams" },
-      { "name": "Canned black beans", "amount": 200, "unit": "grams" },
-      { "name": "Corn kernels", "amount": 100, "unit": "grams" },
-      { "name": "Paprika", "amount": 1, "unit": "teaspoon" },
-      { "name": "Cumin", "amount": 0.5, "unit": "teaspoon" },
-      { "name": "Salt", "amount": 0.5, "unit": "teaspoon" },
-      { "name": "Olive oil", "amount": 1, "unit": "tablespoon" }
+      { "name": "lean beef mince", "isStaple": false, "amount": 300, "unit": "g" },
+      { "name": "wholewheat pasta (dry)", "isStaple": false, "amount": 150, "unit": "g" },
+      { "name": "zucchini", "isStaple": false, "amount": 200, "unit": "g" },
+      { "name": "tomato (canned, diced)", "isStaple": false, "amount": 400, "unit": "g" },
+      { "name": "onion", "isStaple": false, "amount": 1, "unit": "medium" },
+      { "name": "garlic", "isStaple": true, "amount": 2, "unit": "cloves" },
+      { "name": "olive oil", "isStaple": true, "amount": 1, "unit": "tbsp" },
+      { "name": "salt", "isStaple": true, "amount": 1, "unit": "tsp" }
     ],
-    "protein": 35,
-    "carbs": 55,
-    "fat": 20,
-    "calories": 700,
+    "protein": 40,
+    "carbs": 70,
+    "fat": 18,
+    "calories": 680,
     "steps": [
-      "Cook brown rice according to package instructions.",
-      "Heat oil in a pan and cook beef mince until browned.",
-      "Add paprika, cumin, and salt. Stir well.",
-      "Add drained black beans and corn. Cook for 5 more minutes.",
-      "Serve beef and beans over rice."
+      "Cook pasta according to package instructions.",
+      "Heat oil in a pan, sauté onion and garlic 5 minutes.",
+      "Add beef mince and cook until browned.",
+      "Add diced zucchini and cook 5 minutes.",
+      "Add canned tomato and salt, simmer 10 minutes.",
+      "Serve sauce over pasta."
     ]
   },
   {
-    "name": "Pan-Fried Fish with Couscous and Steamed Broccoli",
+    "name": "Baked Fish with Roast Potatoes and Greens",
     "ingredients": [
-      { "name": "White fish fillets", "amount": 300, "unit": "grams" },
-      { "name": "Couscous", "amount": 120, "unit": "grams" },
-      { "name": "Broccoli", "amount": 200, "unit": "grams" },
-      { "name": "Lemon juice", "amount": 1, "unit": "tablespoon" },
-      { "name": "Olive oil", "amount": 1, "unit": "tablespoon" },
-      { "name": "Salt", "amount": 0.5, "unit": "teaspoon" },
-      { "name": "Pepper", "amount": 0.25, "unit": "teaspoon" }
+      { "name": "white fish fillet", "isStaple": false, "amount": 300, "unit": "g" },
+      { "name": "potato", "isStaple": false, "amount": 400, "unit": "g" },
+      { "name": "green beans", "isStaple": false, "amount": 200, "unit": "g" },
+      { "name": "olive oil", "isStaple": true, "amount": 2, "unit": "tbsp" },
+      { "name": "salt", "isStaple": true, "amount": 1, "unit": "tsp" },
+      { "name": "pepper", "isStaple": true, "amount": 0.5, "unit": "tsp" },
+      { "name": "lemon juice", "isStaple": false, "amount": 2, "unit": "tbsp" }
     ],
-    "protein": 32,
-    "carbs": 45,
-    "fat": 15,
-    "calories": 580,
+    "protein": 38,
+    "carbs": 62,
+    "fat": 16,
+    "calories": 590,
     "steps": [
-      "Prepare couscous with boiling water and cover for 5 minutes.",
-      "Steam broccoli until just tender, about 5 minutes.",
-      "Season fish with salt and pepper.",
-      "Pan-fry fish in oil for 3–4 minutes each side until cooked.",
-      "Serve fish with couscous, broccoli, and lemon juice."
+      "Preheat oven to 200°C.",
+      "Cut potatoes into wedges, toss with 1 tbsp oil, salt, pepper, bake 30 minutes.",
+      "Place fish on a tray, drizzle with 1 tbsp oil and lemon juice, season with salt and pepper, bake 15 minutes.",
+      "Steam or boil green beans 5 minutes.",
+      "Serve baked fish with potatoes and beans."
     ]
   }
 ]`

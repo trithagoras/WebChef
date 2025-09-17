@@ -1,7 +1,8 @@
 export interface Ingredient {
     name: string,
     amount: number,
-    unit: string
+    unit: string,
+    isStaple: boolean
 }
 
 export interface Recipe {
@@ -16,10 +17,11 @@ export interface Recipe {
 
 export interface ShoppingListItem {
   name: string,
+  isStaple: boolean,
   amount: {
     amount: number,
     unit: string
-  }
+  }[]
 }
 
 export const masterQuery = `Generate 5 cheap & healthy dinner ideas (for 2 ppl). Criteria:
@@ -33,7 +35,7 @@ Output JSON only:
 [
   {
     name: string,
-    ingredients: [{ name: string, amount: number, unit: string }],
+    ingredients: [{ name: string, isStaple: boolean, amount: number, unit: string }],
     protein: number,
     carbs: number,
     fat: number,
@@ -42,5 +44,6 @@ Output JSON only:
   }
 ]
 
+staple ingredient = ingredient you would usually find at home, e.g. salt, water, soy sauce, pepper, egg, flour, etc.
 Steps = minimal, based style (e.g. “Heat oil in a soup pot and saute onions for 5 minutes”, “Add garlic and ginger and saute 5 more minutes.”, “Add 4 cups of water and stir. Add tomatoes and lentils. Bring to a boil and then lower the heat a bit and simmer for 20 minutes.”). No extra text.
 Do not search web.`;
