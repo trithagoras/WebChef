@@ -1,7 +1,7 @@
 import RecipeList from "./components/RecipeList";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
-import InstructionsSection from "./components/InstructionsSection";
+import MasterQueryTextArea from "./components/MasterQueryTextArea";
 
 export default function Home() {
   return (
@@ -10,7 +10,7 @@ export default function Home() {
       <div className="mb-6">
         <h2 className="text-xl font-semibold mb-2">Master Query</h2>
         <div className="bg-gray-200 p-6 rounded-lg shadow-lg">
-          <InstructionsSection />
+          <MasterQueryTextArea />
           <div className="mt-4 text-sm text-gray-700">
             <strong>Instructions</strong>
             <p>
