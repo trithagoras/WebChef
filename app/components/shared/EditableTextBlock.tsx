@@ -1,7 +1,6 @@
 "use client";
 import {
   faCheck,
-  faClipboard,
   faEdit,
   faUndo,
   faX,
@@ -14,6 +13,7 @@ import { match } from "ts-pattern";
 import { jsonLanguage } from "@codemirror/lang-json";
 import ReactCodeMirror, { EditorView } from "@uiw/react-codemirror";
 import { editableTheme, readOnlyTheme } from "./CodeEditorThemes";
+import CopyButton from "./CopyButton";
 
 interface EditableTextBlockProps {
   mode: "json" | "textArea";
@@ -42,11 +42,6 @@ const EditableTextBlock = ({
       setInit(true);
     }
   }, [defaultText, localStorageKey]);
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(text);
-    toast.success("Copied");
-  };
 
   const saveEdit = () => {
     match(mode)
@@ -115,15 +110,11 @@ const EditableTextBlock = ({
       <button
         onClick={startEditing}
         className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition-all duration-300"
+        aria-label="Edit"
       >
         <FontAwesomeIcon icon={faEdit} />
       </button>
-      <button
-        onClick={handleCopy}
-        className="bg-yellow-500 text-white p-2 rounded-lg hover:bg-yellow-600 transition-all duration-300"
-      >
-        <FontAwesomeIcon icon={faClipboard} />
-      </button>
+      <CopyButton text={text} />
     </>
   );
 
@@ -133,18 +124,21 @@ const EditableTextBlock = ({
         onClick={reset}
         className="bg-gray-400 text-white p-2 rounded-lg hover:bg-gray-500 transition-all duration-300 disabled:bg-gray-300"
         disabled={text === defaultText}
+        aria-label="Reset edit to default"
       >
         <FontAwesomeIcon icon={faUndo} />
       </button>
       <button
         onClick={cancelEdit}
         className="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 transition-all duration-300 disabled:bg-gray-300"
+        aria-label="Cancel edit"
       >
         <FontAwesomeIcon icon={faX} />
       </button>
       <button
         onClick={saveEdit}
         className="bg-green-500 text-white p-2 rounded-lg hover:bg-green-600 transition-all duration-300"
+        aria-label="Save edit"
       >
         <FontAwesomeIcon icon={faCheck} />
       </button>

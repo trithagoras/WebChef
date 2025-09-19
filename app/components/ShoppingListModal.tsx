@@ -1,10 +1,8 @@
-import { faClipboard } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Dispatch, SetStateAction, useCallback, useMemo } from "react";
 import { ShoppingListItem } from "../framework/schema";
-import toast from "react-hot-toast";
 import { match } from "ts-pattern";
 import Modal from "./shared/Modal";
+import CopyButton from "./shared/CopyButton";
 
 interface ShoppingListModalProps {
   showModal: boolean;
@@ -15,7 +13,7 @@ interface ShoppingListModalProps {
 export default function ShoppingListModal({
   showModal,
   setShowModal,
-  shoppingList
+  shoppingList,
 }: ShoppingListModalProps) {
   const closeModal = () => setShowModal(false);
 
@@ -28,7 +26,7 @@ export default function ShoppingListModal({
     [shoppingList]
   );
 
-  const handleCopy = useCallback(
+  const getCopyText = useCallback(
     (isStaple?: boolean) => {
       const arr = match(isStaple)
         .with(true, () => staples)
@@ -36,7 +34,7 @@ export default function ShoppingListModal({
         .with(undefined, () => shoppingList)
         .exhaustive();
 
-      const text = arr
+      return arr
         .map((item) => {
           const amounts = item.amount
             .map((a) => `${a.amount} ${a.unit}`)
@@ -44,32 +42,18 @@ export default function ShoppingListModal({
           return `• ${item.name}${amounts ? ` — ${amounts}` : ""}`;
         })
         .join("\n");
-
-      navigator.clipboard.writeText(text);
-      toast.success("Copied");
     },
     [others, shoppingList, staples]
   );
 
   return (
     <Modal isOpen={showModal} onClose={closeModal} title="Shopping List">
-      <button
-        onClick={() => handleCopy(undefined)}
-        className="bg-yellow-500 text-white p-2 pr-4 rounded-lg hover:bg-yellow-600 transition-all duration-300"
-      >
-        <FontAwesomeIcon icon={faClipboard} />
-        Copy all
-      </button>
+      <CopyButton text={getCopyText(undefined)} label="Copy all" className="pr-4" />
       <ul className="space-y-2">
         {/* staples */}
         <div className="flex flex-row mb-3 mt-8 justify-between">
           <h3 className="text-2xl font-bold text-gray-800">Staples</h3>
-          <button
-            onClick={() => handleCopy(true)}
-            className="bg-yellow-500 text-white p-2 rounded-lg hover:bg-yellow-600 transition-all duration-300"
-          >
-            <FontAwesomeIcon icon={faClipboard} />
-          </button>
+          <CopyButton text={getCopyText(true)} />
         </div>
         {staples.map((item) => (
           <li key={item.name}>
@@ -85,12 +69,7 @@ export default function ShoppingListModal({
         {/* others */}
         <div className="flex flex-row mb-3 mt-8 justify-between">
           <h3 className="text-2xl font-bold text-gray-800">Others</h3>
-          <button
-            onClick={() => handleCopy(false)}
-            className="bg-yellow-500 text-white p-2 rounded-lg hover:bg-yellow-600 transition-all duration-300"
-          >
-            <FontAwesomeIcon icon={faClipboard} />
-          </button>
+          <CopyButton text={getCopyText(false)} />
         </div>
         {others.map((item) => (
           <li key={item.name}>
