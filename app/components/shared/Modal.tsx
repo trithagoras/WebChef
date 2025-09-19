@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { ReactNode, MouseEvent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,7 +16,7 @@ const sizeMap = {
   sm: "max-w-md",
   md: "max-w-2xl",
   lg: "max-w-4xl",
-  xl: "max-w-6xl"
+  xl: "max-w-6xl",
 };
 
 export default function Modal({
@@ -24,7 +24,7 @@ export default function Modal({
   onClose,
   title,
   children,
-  size = "lg"
+  size = "lg",
 }: ModalProps) {
   if (!isOpen) return null;
 
@@ -39,7 +39,6 @@ export default function Modal({
         className={`relative bg-white rounded-lg shadow-xl w-full ${sizeMap[size]} max-h-[90vh] flex flex-col`}
         onClick={stop}
       >
-        {/* Close button */}
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition-colors"
@@ -48,7 +47,6 @@ export default function Modal({
           <FontAwesomeIcon icon={faXmark} size="2x" />
         </button>
 
-        {/* Header (not scrollable) */}
         {title && (
           <div className="flex items-center justify-between px-8 pt-8 pb-4 mb-4 border-b">
             {title && (
@@ -57,7 +55,6 @@ export default function Modal({
           </div>
         )}
 
-        {/* Scrollable content */}
         <div
           className="flex-1 overflow-y-auto px-8 pb-8"
           style={{ WebkitOverflowScrolling: "touch" }}

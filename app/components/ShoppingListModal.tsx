@@ -1,10 +1,10 @@
 import { faClipboard } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useCallback, useMemo } from "react";
 import { ShoppingListItem } from "../framework/schema";
 import toast from "react-hot-toast";
 import { match } from "ts-pattern";
-import Modal from "./Modal";
+import Modal from "./shared/Modal";
 
 interface ShoppingListModalProps {
   showModal: boolean;
@@ -19,37 +19,44 @@ export default function ShoppingListModal({
 }: ShoppingListModalProps) {
   const closeModal = () => setShowModal(false);
 
-  const staples = shoppingList.filter(i => i.isStaple);
-  const others = shoppingList.filter(i => !i.isStaple);
+  const staples = useMemo(
+    () => shoppingList.filter((i) => i.isStaple),
+    [shoppingList]
+  );
+  const others = useMemo(
+    () => shoppingList.filter((i) => !i.isStaple),
+    [shoppingList]
+  );
 
-  const handleCopy = (isStaple?: boolean) => {
-    const arr = match(isStaple)
-      .with(true, () => staples)
-      .with(false, () => others)
-      .with(undefined, () => shoppingList)
-      .exhaustive();
+  const handleCopy = useCallback(
+    (isStaple?: boolean) => {
+      const arr = match(isStaple)
+        .with(true, () => staples)
+        .with(false, () => others)
+        .with(undefined, () => shoppingList)
+        .exhaustive();
 
-    const text = arr
-      .map(item => {
-        const amounts = item.amount.map(a => `${a.amount} ${a.unit}`).join(" + ");
-        return `• ${item.name}${amounts ? ` — ${amounts}` : ""}`;
-      })
-      .join("\n");
+      const text = arr
+        .map((item) => {
+          const amounts = item.amount
+            .map((a) => `${a.amount} ${a.unit}`)
+            .join(" + ");
+          return `• ${item.name}${amounts ? ` — ${amounts}` : ""}`;
+        })
+        .join("\n");
 
-    navigator.clipboard.writeText(text);
-    toast.success("Copied");
-  };
+      navigator.clipboard.writeText(text);
+      toast.success("Copied");
+    },
+    [others, shoppingList, staples]
+  );
 
   return (
-    <Modal
-      isOpen={showModal}
-      onClose={closeModal}
-      title="Shopping List"
-    >
+    <Modal isOpen={showModal} onClose={closeModal} title="Shopping List">
       <button
         onClick={() => handleCopy(undefined)}
         className="bg-yellow-500 text-white p-2 pr-4 rounded-lg hover:bg-yellow-600 transition-all duration-300"
-        >
+      >
         <FontAwesomeIcon icon={faClipboard} />
         Copy all
       </button>
@@ -64,12 +71,12 @@ export default function ShoppingListModal({
             <FontAwesomeIcon icon={faClipboard} />
           </button>
         </div>
-        {staples.map(item => (
+        {staples.map((item) => (
           <li key={item.name}>
             <div className="flex justify-between items-center">
               <span className="text-lg font-bold">{item.name}</span>
               <span className="text-sm text-gray-600">
-                {item.amount.map(a => `${a.amount} ${a.unit}`).join(" + ")}
+                {item.amount.map((a) => `${a.amount} ${a.unit}`).join(" + ")}
               </span>
             </div>
           </li>
@@ -85,12 +92,12 @@ export default function ShoppingListModal({
             <FontAwesomeIcon icon={faClipboard} />
           </button>
         </div>
-        {others.map(item => (
+        {others.map((item) => (
           <li key={item.name}>
             <div className="flex justify-between items-center">
               <span className="text-lg font-medium">{item.name}</span>
               <span className="text-sm text-gray-600">
-                {item.amount.map(a => `${a.amount} ${a.unit}`).join(" + ")}
+                {item.amount.map((a) => `${a.amount} ${a.unit}`).join(" + ")}
               </span>
             </div>
           </li>

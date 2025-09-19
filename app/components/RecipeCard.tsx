@@ -15,8 +15,12 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
       >
         <h2 className="text-xl font-bold text-gray-800 mb-3">{recipe.name}</h2>
         <div className="gap-3 text-sm text-gray-600 mb-4">
-          <p>Prep <FontAwesomeIcon icon={faClock} /> : {recipe.prepTime}</p>
-          <p>Total <FontAwesomeIcon icon={faClock} /> : {recipe.totalTime}</p>
+          <p>
+            Prep <FontAwesomeIcon icon={faClock} /> : {recipe.prepTime}
+          </p>
+          <p>
+            Total <FontAwesomeIcon icon={faClock} /> : {recipe.totalTime}
+          </p>
         </div>
         <div className="flex flex-wrap gap-3 text-sm text-gray-600">
           <span>{recipe.calories} kcal</span>
@@ -26,7 +30,11 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
         </div>
       </div>
 
-      <RecipeModal recipe={recipe} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      <RecipeModal
+        recipe={recipe}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
     </>
   );
 };

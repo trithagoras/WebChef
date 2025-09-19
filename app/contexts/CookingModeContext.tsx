@@ -1,12 +1,20 @@
-'use client';
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+"use client";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 
 interface CookingModeContextType {
   cookingMode: boolean;
   toggleCookingMode: () => void;
 }
 
-const CookingModeContext = createContext<CookingModeContextType | undefined>(undefined);
+const CookingModeContext = createContext<CookingModeContextType | undefined>(
+  undefined
+);
 
 export const CookingModeProvider = ({ children }: { children: ReactNode }) => {
   const [cookingMode, setCookingMode] = useState(false);
@@ -14,12 +22,15 @@ export const CookingModeProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (cookingMode) {
-      navigator.wakeLock?.request('screen').then(lock => {
-        setWakeLock(lock);
-        lock.addEventListener('release', () => setWakeLock(null));
-      }).catch(err => {
-        console.error('WakeLock error:', err);
-      });
+      navigator.wakeLock
+        ?.request("screen")
+        .then((lock) => {
+          setWakeLock(lock);
+          lock.addEventListener("release", () => setWakeLock(null));
+        })
+        .catch((err) => {
+          console.error("WakeLock error:", err);
+        });
     } else {
       wakeLock?.release();
       setWakeLock(null);
@@ -27,10 +38,10 @@ export const CookingModeProvider = ({ children }: { children: ReactNode }) => {
     return () => {
       wakeLock?.release();
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cookingMode]);
 
-  const toggleCookingMode = () => setCookingMode(m => !m);
+  const toggleCookingMode = () => setCookingMode((m) => !m);
 
   return (
     <CookingModeContext.Provider value={{ cookingMode, toggleCookingMode }}>
@@ -41,6 +52,7 @@ export const CookingModeProvider = ({ children }: { children: ReactNode }) => {
 
 export const useCookingMode = () => {
   const ctx = useContext(CookingModeContext);
-  if (!ctx) throw new Error("useCookingMode must be used within CookingModeProvider");
+  if (!ctx)
+    throw new Error("useCookingMode must be used within CookingModeProvider");
   return ctx;
 };

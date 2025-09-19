@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState, useCallback, useEffect } from "react";
 import { Recipe, ShoppingListItem } from "../framework/schema";
@@ -6,7 +6,7 @@ import RecipeCard from "./RecipeCard";
 import ShoppingListModal from "./ShoppingListModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList } from "@fortawesome/free-solid-svg-icons";
-import EditableTextBlock from "./EditableTextBlock";
+import EditableTextBlock from "./shared/EditableTextBlock";
 import fakeData from "../framework/fakeData";
 import Skeleton from "react-loading-skeleton";
 
@@ -20,12 +20,12 @@ const RecipeList = () => {
     const getAmounts = (name: string) => {
       const amounts: { amount: number; unit: string }[] = [];
 
-      const ingredients = recipes.flatMap(r =>
-        r.ingredients.filter(i => i.name === name)
+      const ingredients = recipes.flatMap((r) =>
+        r.ingredients.filter((i) => i.name === name)
       );
 
-      ingredients.forEach(i => {
-        const existing = amounts.find(a => a.unit === i.unit);
+      ingredients.forEach((i) => {
+        const existing = amounts.find((a) => a.unit === i.unit);
         if (existing) {
           existing.amount += i.amount;
         } else {
@@ -37,17 +37,20 @@ const RecipeList = () => {
     };
 
     const distinctIngredientNames = [
-      ...new Set(recipes.flatMap(r => r.ingredients.map(i => i.name))),
+      ...new Set(recipes.flatMap((r) => r.ingredients.map((i) => i.name))),
     ];
 
     // jank
-    const isStaple = (n: string) => recipes.flatMap(r => r.ingredients).find(i => i.name === n)?.isStaple ?? false;
+    const isStaple = (n: string) =>
+      recipes.flatMap((r) => r.ingredients).find((i) => i.name === n)
+        ?.isStaple ?? false;
 
-    return distinctIngredientNames.map(n => ({
-      name: n,
-      amount: getAmounts(n),
-      isStaple: isStaple(n)
-    }))
+    return distinctIngredientNames
+      .map((n) => ({
+        name: n,
+        amount: getAmounts(n),
+        isStaple: isStaple(n),
+      }))
       .sort((a, b) => a.name.localeCompare(b.name))
       .sort((a, b) => Number(b.isStaple) - Number(a.isStaple));
   }, []);
@@ -104,7 +107,7 @@ const RecipeList = () => {
             shoppingList={shoppingList}
           />
           <div className="grid gap-6 lg:grid-cols-2 mt-6">
-            {recipes.map(r => (
+            {recipes.map((r) => (
               <RecipeCard key={r.name} recipe={r} />
             ))}
           </div>
