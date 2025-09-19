@@ -8,8 +8,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { masterQuery } from "../../framework/query";
-import fakeData from "../../framework/fakeData";
 import toast from "react-hot-toast";
 import Skeleton from "react-loading-skeleton";
 import { match } from "ts-pattern";
@@ -20,24 +18,21 @@ import { editableTheme, readOnlyTheme } from "./CodeEditorThemes";
 interface EditableTextBlockProps {
   mode: "json" | "textArea";
   onSave?: (value: string) => void;
+  localStorageKey: string;
+  defaultText: string;
 }
 
-const EditableTextBlock = ({ mode, onSave }: EditableTextBlockProps) => {
+const EditableTextBlock = ({
+  mode,
+  onSave,
+  defaultText,
+  localStorageKey,
+}: EditableTextBlockProps) => {
   const [text, setText] = useState("");
   const [init, setInit] = useState(false);
   const [previousText, setPreviousText] = useState("");
   const [textAreaKey, setTextAreaKey] = useState(0);
   const [isEditing, setIsEditing] = useState(false);
-
-  const defaultText = match(mode)
-    .with("json", () => fakeData)
-    .with("textArea", () => masterQuery)
-    .exhaustive();
-
-  const localStorageKey = match(mode)
-    .with("json", () => "recipesJson")
-    .with("textArea", () => "queryText")
-    .exhaustive();
 
   useEffect(() => {
     if (typeof window !== "undefined") {

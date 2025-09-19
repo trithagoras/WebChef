@@ -84,7 +84,7 @@ const RecipeList = () => {
   return (
     <div>
       <div className="bg-gray-200 p-6 rounded-lg shadow-lg">
-        <EditableTextBlock mode="json" onSave={onSaveJson} />
+        <EditableTextBlock mode="json" onSave={onSaveJson} defaultText={fakeData} localStorageKey="recipesJson" />
       </div>
       <div className="flex flex-row ml-10 justify-center">
         {showShoppingListButton && (
