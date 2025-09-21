@@ -64,6 +64,8 @@ const RecipeModal = ({
         </p>
       </div>
 
+      <p className="text-sm mb-3 text-gray-600">Serves : {recipe.servings}</p>
+
       <div className="text-gray-700 mb-4">
         <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-600">
           <span>

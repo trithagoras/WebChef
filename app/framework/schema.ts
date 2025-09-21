@@ -14,6 +14,7 @@ export interface Recipe {
     calories: number,
     prepTime: string,
     totalTime: string,
+    servings: number,
     steps: string[]
 }
 

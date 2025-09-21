@@ -14,7 +14,7 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
         className="p-6 bg-white rounded-2xl shadow-md cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
       >
         <h2 className="text-xl font-bold text-gray-800 mb-3">{recipe.name}</h2>
-        <div className="gap-3 text-sm text-gray-600 mb-4">
+        <div className="gap-3 text-sm text-gray-600 mb-3">
           <p>
             Prep <FontAwesomeIcon icon={faClock} /> : {recipe.prepTime}
           </p>
@@ -22,6 +22,7 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
             Total <FontAwesomeIcon icon={faClock} /> : {recipe.totalTime}
           </p>
         </div>
+        <p className="text-sm mb-3 text-gray-600">Serves : {recipe.servings}</p>
         <div className="flex flex-wrap gap-3 text-sm text-gray-600">
           <span>{recipe.calories} kcal</span>
           <span>{recipe.protein} g P</span>

@@ -4,6 +4,7 @@ export const masterQuery = `Generate 5 cheap & healthy dinner ideas (for 2 ppl).
 - Balanced macros (P, C, F)
 - Est. macros/serving (P, C, F in g, kcal)
 - Est. prep & total time to make meal (as a string, e.g. '30 minutes', '1 hour', etc.)
+- Include # of servings in recipe
 - Avoid rare/1-use/expensive ingredients
 
 Output JSON only:
@@ -17,6 +18,7 @@ Output JSON only:
     calories: number,
     prepTime: string,
     totalTime: string,
+    servings: number,
     steps: [string]
   }
 ]
