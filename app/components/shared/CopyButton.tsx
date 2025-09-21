@@ -1,4 +1,4 @@
-import { faClipboard } from "@fortawesome/free-solid-svg-icons";
+import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCallback } from "react";
 import toast from "react-hot-toast";
@@ -21,7 +21,7 @@ const CopyButton = ({ text, label, className, ...props }: CopyButtonProps) => {
       aria-label="Copy"
       {...props}
     >
-      <FontAwesomeIcon icon={faClipboard} />
+      <FontAwesomeIcon icon={faCopy} className={label ? "mr-2" : ""} />
       {label}
     </button>
   );
