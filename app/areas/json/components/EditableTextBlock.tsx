@@ -12,8 +12,8 @@ import Skeleton from "react-loading-skeleton";
 import { match } from "ts-pattern";
 import { jsonLanguage } from "@codemirror/lang-json";
 import ReactCodeMirror, { EditorView } from "@uiw/react-codemirror";
-import { editableTheme, readOnlyTheme } from "./CodeEditorThemes";
-import CopyButton from "./CopyButton";
+import { editableTheme, readOnlyTheme } from "../CodeEditorThemes";
+import CopyButton from "../../shared/components/CopyButton";
 
 interface EditableTextBlockProps {
   mode: "json" | "textArea";

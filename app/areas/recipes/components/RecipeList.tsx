@@ -1,14 +1,14 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
-import { Recipe, ShoppingListItem } from "../framework/schema";
+import { Recipe, ShoppingListItem } from "../../shared/framework/schema";
 import RecipeCard from "./RecipeCard";
-import ShoppingListModal from "./ShoppingListModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList } from "@fortawesome/free-solid-svg-icons";
-import EditableTextBlock from "./shared/EditableTextBlock";
-import fakeData from "../framework/fakeData";
+import EditableTextBlock from "../../json/components/EditableTextBlock";
+import fakeData from "../../shared/framework/fakeData";
 import Skeleton from "react-loading-skeleton";
+import ShoppingListModal from "./ShoppingListModal";
 
 const RecipeList = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);

@@ -1,0 +1,31 @@
+import { faUpRightFromSquare } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import QueryEditArea from "./QueryEditArea"
+
+const QuerySection = () => {
+    return <div className="mb-6">
+        <h2 className="text-xl font-semibold mb-2">Master Query</h2>
+        <div className="bg-gray-200 p-6 rounded-lg shadow-lg">
+            <QueryEditArea />
+            <div className="mt-4 text-sm text-gray-700">
+                <strong>Instructions</strong>
+                <p>
+                Add any extra instructions (e.g., &quot;make it
+                gluten-free&quot;). Then copy all and paste it into an LLM such as{" "}
+                <a
+                    className="text-blue-500 hover:text-blue-700"
+                    href="https://chatgpt.com/"
+                    target="_blank"
+                >
+                    <FontAwesomeIcon icon={faUpRightFromSquare} />
+                    ChatGPT
+                </a>
+                . Paste the resulting JSON into the code box below and save
+                changes.
+                </p>
+            </div>
+        </div>
+    </div>
+};
+
+export default QuerySection;

@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useRef } from 'react'
-import { useCookingMode } from '../stores/stores'
+import { useCookingMode } from '../stores/cookingModeStore'
 
 export const useCookingModeWakeLock = () => {
   const cookingMode = useCookingMode((state) => state.cookingMode)

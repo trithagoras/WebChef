@@ -5,7 +5,7 @@ import { Toaster } from "react-hot-toast";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "react-loading-skeleton/dist/skeleton.css";
-import CookingModeWakeLock from "./components/CookingModeWakeLock";
+import CookingModeWakeLock from "./areas/shared/components/CookingModeWakeLock";
 
 config.autoAddCss = false;
 

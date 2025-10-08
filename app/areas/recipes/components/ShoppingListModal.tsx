@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction, useCallback, useMemo } from "react";
-import { ShoppingListItem } from "../framework/schema";
 import { match } from "ts-pattern";
-import Modal from "./shared/Modal";
-import CopyButton from "./shared/CopyButton";
+import CopyButton from "../../shared/components/CopyButton";
+import Modal from "../../shared/components/Modal";
+import { ShoppingListItem } from "../../shared/framework/schema";
 
 interface ShoppingListModalProps {
   showModal: boolean;
