@@ -2,7 +2,6 @@ import RecipeList from "./components/RecipeList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import EditableTextBlock from "./components/shared/EditableTextBlock";
-import { CookingModeProvider } from "./contexts/CookingModeContext";
 import { masterQuery } from "./framework/query";
 
 export default function Home() {
@@ -32,9 +31,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <CookingModeProvider>
-        <RecipeList />
-      </CookingModeProvider>
+      <RecipeList />
     </div>
   );
 }

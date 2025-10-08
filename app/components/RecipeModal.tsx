@@ -2,8 +2,8 @@ import { Recipe } from "../framework/schema";
 import { Dispatch, SetStateAction, useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
-import { useCookingMode } from "../contexts/CookingModeContext";
 import Modal from "./shared/Modal";
+import { useCookingMode } from "../stores/stores";
 
 interface RecipeModalProps {
   recipe: Recipe;
