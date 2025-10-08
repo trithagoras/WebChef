@@ -5,7 +5,7 @@ import { Recipe, ShoppingListItem } from "../../shared/framework/schema";
 import RecipeCard from "./RecipeCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList } from "@fortawesome/free-solid-svg-icons";
-import EditableTextBlock from "../../json/components/EditableTextBlock";
+import MainJsonEditArea from "../../json/components/MainJsonEditArea";
 import fakeData from "../../shared/framework/fakeData";
 import Skeleton from "react-loading-skeleton";
 import ShoppingListModal from "./ShoppingListModal";
@@ -55,10 +55,6 @@ const RecipeList = () => {
       .sort((a, b) => Number(b.isStaple) - Number(a.isStaple));
   }, []);
 
-  const onSaveJson = useCallback((value: string) => {
-    setRecipes(JSON.parse(value));
-  }, []);
-
   useEffect(() => {
     if (typeof window !== "undefined") {
       setInit(true);
@@ -84,7 +80,7 @@ const RecipeList = () => {
   return (
     <div>
       <div className="bg-gray-200 p-6 rounded-lg shadow-lg">
-        <EditableTextBlock mode="json" onSave={onSaveJson} defaultText={fakeData} localStorageKey="recipesJson" />
+        <MainJsonEditArea />
       </div>
       <div className="flex flex-row ml-10 justify-center">
         {showShoppingListButton && (
