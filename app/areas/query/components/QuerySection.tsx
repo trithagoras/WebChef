@@ -1,8 +1,16 @@
+"use client"
 import { faUpRightFromSquare } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import QueryEditArea from "./QueryEditArea"
+import { useEditMode } from "../../shared/stores/editModeStore";
 
 const QuerySection = () => {
+    const { isEditing: editMode } = useEditMode();
+
+    if (!editMode) {
+        return <></>;
+    }
+
     return <div className="mb-6">
         <h2 className="text-xl font-semibold mb-2">Master Query</h2>
         <div className="bg-gray-200 p-6 rounded-lg shadow-lg">

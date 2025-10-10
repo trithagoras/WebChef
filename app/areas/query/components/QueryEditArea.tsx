@@ -1,33 +1,15 @@
 "use client";
-import { useEffect, useState } from "react";
-import Skeleton from "react-loading-skeleton";
 import { useEditMode } from "../../shared/stores/editModeStore";
-import { queryStorageKey, useQueryStore } from "../stores/queryStore";
+import { useQueryStore } from "../stores/queryStore";
 import CopyButton from "../../shared/components/CopyButton";
-import { masterQuery } from "../../shared/framework/query";
 
 const QueryEditArea = () => {
   const {
     queryText: text,
     setQueryText,
-    refreshPreviousQueryText,
     textAreaKey
   } = useQueryStore();
-  const [init, setInit] = useState(false);
-  const { editMode: isEditing } = useEditMode();
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const s = window.localStorage.getItem(queryStorageKey) ?? masterQuery;
-      setQueryText(s);
-      refreshPreviousQueryText();
-      setInit(true);
-    }
-  }, [refreshPreviousQueryText, setQueryText]);
-
-  if (!init) {
-    return <Skeleton count={6} />;
-  }
+  const { isEditing } = useEditMode();
 
   return (
     <div className="flex flex-row">

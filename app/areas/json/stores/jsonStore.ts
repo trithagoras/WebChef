@@ -1,18 +1,31 @@
-import { create } from 'zustand'
+import { create } from "zustand";
+import fakeData from "../../shared/framework/fakeData";
+
+export const jsonStorageKey = "recipesJson";
 
 interface JsonState {
-  json: string,
-  setJson: (value: string) => void,
-  previousJson: string,
-  refreshPreviousJson: () => void
+  json: string;
+  setJson: (value: string) => void;
+  previousJson: string;
+  refreshPreviousJson: () => void;
 }
 
-// For DB setting key or localstorage key
-export const jsonStorageKey = 'json';
+const getInitialJson = () => {
+  if (typeof window !== "undefined") {
+    return window.localStorage.getItem(jsonStorageKey) ?? fakeData;
+  }
+  return fakeData;
+};
 
-export const useJsonStore = create<JsonState>()((set) => ({
-  json: '',
-  setJson: (value) => set(() => ({ json: value })),
-  previousJson: '',
-  refreshPreviousJson: () => set(state => ({ previousJson: state.json }))
-}));
+export const useJsonStore = create<JsonState>((set) => {
+  const initialJson = getInitialJson();
+
+  return {
+    json: initialJson,
+    previousJson: initialJson,
+    setJson: (value: string) => {
+      set(() => ({ json: value }));
+    },
+    refreshPreviousJson: () => set((state) => ({ previousJson: state.json }))
+  };
+});

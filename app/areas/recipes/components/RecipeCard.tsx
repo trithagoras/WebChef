@@ -1,12 +1,73 @@
-import { useState } from "react";
-import { Recipe } from "../framework/schema";
-import RecipeModal from "./RecipeModal";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+"use client";
+import { jsonLanguage } from "@codemirror/lang-json";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ReactCodeMirror from "@uiw/react-codemirror";
+import { EditorView } from "codemirror";
+import { useState, useMemo } from "react";
+import { editableTheme } from "../../json/CodeEditorThemes";
+import { useJsonStore } from "../../json/stores/jsonStore";
+import { Recipe } from "../../shared/framework/schema";
+import { useEditMode } from "../../shared/stores/editModeStore";
+import RecipeModal from "./RecipeModal";
 
-const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
+const RecipeCard = ({ index }: { index: number }) => {
+  const { json, setJson } = useJsonStore();
+  const { isEditing } = useEditMode();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const extensions = useMemo(
+    () => [jsonLanguage.extension, editableTheme, EditorView.editable.of(true)],
+    []
+  );
+
+  const handleChange = (newRecipeJson: string) => {
+    try {
+      const newRecipe = JSON.parse(newRecipeJson);
+      const parsed = JSON.parse(json);
+
+      if (Array.isArray(parsed)) {
+        parsed[index] = newRecipe;
+        setJson(JSON.stringify(parsed, null, 2));
+      }
+    } catch (e) {
+      // Don't update if JSON is invalid
+    }
+  };
+
+  // derive live recipe data from the main JSON
+  let recipe: Recipe | null = null;
+  try {
+    const parsed = JSON.parse(json);
+    if (Array.isArray(parsed)) {
+      recipe = parsed[index];
+    }
+  } catch (e) {
+    console.error("Invalid JSON", e);
+  }
+
+  if (!recipe) {
+    return null;
+  }
+
+  if (isEditing) {
+    return (
+      <div className="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
+        <h2 className="text-sm font-semibold text-gray-700 mb-2">
+          Editing Recipe: {recipe.name}
+        </h2>
+        <ReactCodeMirror
+          value={JSON.stringify(recipe, null, 2)}
+          height="200px"
+          onChange={handleChange}
+          extensions={extensions}
+          className="bg-white text-sm border border-gray-300 rounded"
+        />
+      </div>
+    );
+  }
+
+  // Default view (read-only)
   return (
     <>
       <div

@@ -1,31 +1,18 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
-import Skeleton from "react-loading-skeleton";
+import { useMemo } from "react";
 import { jsonLanguage } from "@codemirror/lang-json";
 import ReactCodeMirror, { EditorView } from "@uiw/react-codemirror";
 import { editableTheme, readOnlyTheme } from "../CodeEditorThemes";
 import CopyButton from "../../shared/components/CopyButton";
 import { useEditMode } from "../../shared/stores/editModeStore";
-import { jsonStorageKey, useJsonStore } from "../stores/jsonStore";
-import fakeData from "../../shared/framework/fakeData";
+import { useJsonStore } from "../stores/jsonStore";
 
 const MainJsonEditArea = () => {
   const {
       json: text,
       setJson,
-      refreshPreviousJson
     } = useJsonStore();
-    const [init, setInit] = useState(false);
-    const { editMode: isEditing } = useEditMode();
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const s = window.localStorage.getItem(jsonStorageKey) ?? fakeData;
-      setJson(s);
-      refreshPreviousJson();
-      setInit(true);
-    }
-  }, [refreshPreviousJson, setJson]);
+    const { isEditing } = useEditMode();
 
   // code mirror extensions
   const extensions = useMemo(
@@ -36,10 +23,6 @@ const MainJsonEditArea = () => {
     ],
     [isEditing]
   );
-
-  if (!init) {
-    return <Skeleton count={6} />;
-  }
 
   return (
     <div className="flex flex-row">

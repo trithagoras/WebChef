@@ -4,17 +4,21 @@ import { useState, useCallback, useEffect } from "react";
 import { Recipe, ShoppingListItem } from "../../shared/framework/schema";
 import RecipeCard from "./RecipeCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faList } from "@fortawesome/free-solid-svg-icons";
-import MainJsonEditArea from "../../json/components/MainJsonEditArea";
-import fakeData from "../../shared/framework/fakeData";
-import Skeleton from "react-loading-skeleton";
+import { faList, faX } from "@fortawesome/free-solid-svg-icons";
 import ShoppingListModal from "./ShoppingListModal";
+import { useJsonStore } from "../../json/stores/jsonStore";
+import { useEditMode } from "../../shared/stores/editModeStore";
 
 const RecipeList = () => {
+  const { json, setJson } = useJsonStore();
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [showShoppingListModal, setShowShoppingListModal] = useState(false);
   const [shoppingList, setShoppingList] = useState<ShoppingListItem[]>([]);
-  const [init, setInit] = useState(false);
+  const { isEditing } = useEditMode();
+
+  useEffect(() => {
+    setRecipes(JSON.parse(json));
+  }, [json]);
 
   const makeShoppingList = useCallback((recipes: Recipe[]) => {
     const getAmounts = (name: string) => {
@@ -40,7 +44,6 @@ const RecipeList = () => {
       ...new Set(recipes.flatMap((r) => r.ingredients.map((i) => i.name))),
     ];
 
-    // jank
     const isStaple = (n: string) =>
       recipes.flatMap((r) => r.ingredients).find((i) => i.name === n)
         ?.isStaple ?? false;
@@ -56,14 +59,6 @@ const RecipeList = () => {
   }, []);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      setInit(true);
-      const value = localStorage.getItem("recipesJson") ?? fakeData;
-      setRecipes(JSON.parse(value));
-    }
-  }, []);
-
-  useEffect(() => {
     if (recipes.length > 0) {
       setShoppingList(makeShoppingList(recipes));
     } else {
@@ -71,18 +66,18 @@ const RecipeList = () => {
     }
   }, [recipes, makeShoppingList]);
 
-  if (!init) {
-    return <Skeleton count={10} />;
-  }
+  const deleteRecipe = (index: number) => {
+    const updated = [...recipes];
+    updated.splice(index, 1);
+    setRecipes(updated);
+    setJson(JSON.stringify(updated, null, 2));
+  };
 
   const showShoppingListButton = shoppingList.length > 0;
 
   return (
     <div>
-      <div className="bg-gray-200 p-6 rounded-lg shadow-lg">
-        <MainJsonEditArea />
-      </div>
-      <div className="flex flex-row ml-10 justify-center">
+      <div className="flex flex-row justify-center">
         {showShoppingListButton && (
           <div className="flex justify-center my-6">
             <button
@@ -103,8 +98,17 @@ const RecipeList = () => {
             shoppingList={shoppingList}
           />
           <div className="grid gap-6 lg:grid-cols-2 mt-6">
-            {recipes.map((r) => (
-              <RecipeCard key={r.name} recipe={r} />
+            {recipes.map((r, ix) => (
+              <div key={r.name} className="relative group">
+                <RecipeCard index={ix} />
+                {isEditing && <button
+                  onClick={() => deleteRecipe(ix)}
+                  className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white py-1 px-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                  title="Delete Recipe"
+                >
+                  <FontAwesomeIcon icon={faX} size="xs" />
+                </button>}
+              </div>
             ))}
           </div>
         </>
