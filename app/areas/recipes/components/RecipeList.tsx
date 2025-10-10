@@ -98,8 +98,8 @@ const RecipeList = () => {
             shoppingList={shoppingList}
           />
           <div className="grid gap-6 lg:grid-cols-2 mt-6">
-            {recipes.map((r, ix) => (
-              <div key={r.name} className="relative group">
+            {recipes.map((_r, ix) => (
+              <div key={ix} className="relative group">
                 <RecipeCard index={ix} />
                 {isEditing && <button
                   onClick={() => deleteRecipe(ix)}

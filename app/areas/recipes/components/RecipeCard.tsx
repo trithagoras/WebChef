@@ -30,6 +30,7 @@ const RecipeCard = ({ index }: { index: number }) => {
         parsed[index] = newRecipe;
         setJson(JSON.stringify(parsed, null, 2));
       }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       // Don't update if JSON is invalid
     }
