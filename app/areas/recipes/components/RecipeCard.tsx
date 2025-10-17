@@ -6,10 +6,10 @@ import ReactCodeMirror from "@uiw/react-codemirror";
 import { EditorView } from "codemirror";
 import { useState, useMemo } from "react";
 import { editableTheme } from "../../json/CodeEditorThemes";
-import { useJsonStore } from "../../json/stores/jsonStore";
 import { Recipe } from "../../shared/framework/schema";
 import { useEditMode } from "../../shared/stores/editModeStore";
 import RecipeModal from "./RecipeModal";
+import useJsonStore from "../../json/stores/jsonStore";
 
 const RecipeCard = ({ index }: { index: number }) => {
   const { json, setJson } = useJsonStore();

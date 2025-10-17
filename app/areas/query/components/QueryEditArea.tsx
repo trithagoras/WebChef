@@ -1,7 +1,7 @@
 "use client";
 import { useEditMode } from "../../shared/stores/editModeStore";
-import { useQueryStore } from "../stores/queryStore";
 import CopyButton from "../../shared/components/CopyButton";
+import useQueryStore from "../stores/queryStore";
 
 const QueryEditArea = () => {
   const {

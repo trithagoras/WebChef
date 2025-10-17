@@ -7,20 +7,20 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEditMode } from "../stores/editModeStore";
-import { jsonStorageKey, useJsonStore } from "../../json/stores/jsonStore";
-import { queryStorageKey, useQueryStore } from "../../query/stores/queryStore";
+import useQueryStore from "../../query/stores/queryStore";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { masterQuery } from "../framework/query";
 import fakeData from "../framework/fakeData";
 import toast from "react-hot-toast";
+import useJsonStore from "../../json/stores/jsonStore";
 
 const EditButton = () => {
   const { isEditing, toggleEditMode } = useEditMode();
   const { json, setJson, refreshPreviousJson } = useJsonStore();
   const { queryText, setQueryText, refreshPreviousQueryText, incrementTextAreaKey } = useQueryStore();
 
-  const [savedQuery, saveQuery] = useLocalStorage(queryStorageKey, masterQuery);
-  const [savedJson, saveJson] = useLocalStorage(jsonStorageKey, fakeData);
+  const [savedQuery, saveQuery] = useLocalStorage("queryText", masterQuery);
+  const [savedJson, saveJson] = useLocalStorage("recipesJson", fakeData);
 
   const handleSave = () => {
     incrementTextAreaKey();

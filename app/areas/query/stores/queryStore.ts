@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { masterQuery } from "../../shared/framework/query";
+import { getLocalStorageItem } from "../../shared/hooks/useLocalStorage";
 
 interface QueryState {
   queryText: string;
@@ -10,17 +11,14 @@ interface QueryState {
   incrementTextAreaKey: () => void;
 }
 
-// For DB setting key or localstorage key
-export const queryStorageKey = "queryText";
-
 const getInitialQuery = () => {
   if (typeof window !== "undefined") {
-    return window.localStorage.getItem(queryStorageKey) ?? masterQuery;
+    return getLocalStorageItem<string>("queryText") ?? masterQuery;
   }
   return masterQuery;
 };
 
-export const useQueryStore = create<QueryState>()((set) => {
+const useQueryStore = create<QueryState>()((set) => {
   const initialQuery = getInitialQuery();
 
   return {
@@ -34,3 +32,5 @@ export const useQueryStore = create<QueryState>()((set) => {
       set((state) => ({ textAreaKey: state.textAreaKey + 1 })),
   };
 });
+
+export default useQueryStore;

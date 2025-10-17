@@ -6,8 +6,8 @@ import RecipeCard from "./RecipeCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList, faX } from "@fortawesome/free-solid-svg-icons";
 import ShoppingListModal from "./ShoppingListModal";
-import { useJsonStore } from "../../json/stores/jsonStore";
 import { useEditMode } from "../../shared/stores/editModeStore";
+import useJsonStore from "../../json/stores/jsonStore";
 
 const RecipeList = () => {
   const { json, setJson } = useJsonStore();

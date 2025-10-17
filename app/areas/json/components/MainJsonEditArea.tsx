@@ -5,7 +5,7 @@ import ReactCodeMirror, { EditorView } from "@uiw/react-codemirror";
 import { editableTheme, readOnlyTheme } from "../CodeEditorThemes";
 import CopyButton from "../../shared/components/CopyButton";
 import { useEditMode } from "../../shared/stores/editModeStore";
-import { useJsonStore } from "../stores/jsonStore";
+import useJsonStore from "../stores/jsonStore";
 
 const MainJsonEditArea = () => {
   const {

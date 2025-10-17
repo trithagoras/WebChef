@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import fakeData from "../../shared/framework/fakeData";
-
-export const jsonStorageKey = "recipesJson";
+import { getLocalStorageItem } from "../../shared/hooks/useLocalStorage";
 
 interface JsonState {
   json: string;
@@ -12,12 +11,12 @@ interface JsonState {
 
 const getInitialJson = () => {
   if (typeof window !== "undefined") {
-    return window.localStorage.getItem(jsonStorageKey) ?? fakeData;
+    return getLocalStorageItem<string>("recipesJson") ?? fakeData;
   }
   return fakeData;
 };
 
-export const useJsonStore = create<JsonState>((set) => {
+const useJsonStore = create<JsonState>((set) => {
   const initialJson = getInitialJson();
 
   return {
@@ -29,3 +28,5 @@ export const useJsonStore = create<JsonState>((set) => {
     refreshPreviousJson: () => set((state) => ({ previousJson: state.json }))
   };
 });
+
+export default useJsonStore;
