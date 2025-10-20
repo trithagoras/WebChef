@@ -6,6 +6,7 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import EditButton from "./areas/shared/components/EditButton";
 import SettingsButton from "./areas/settings/SettingsButton";
 import ErrorBoundary from "./areas/shared/components/ErrorBoundary";
+import StoreInitializer from "./areas/shared/components/StoreInitializer";
 
 export default function Home() {
   return (
@@ -28,10 +29,12 @@ export default function Home() {
         </p>
       </div>
       <ErrorBoundary>
-        <QuerySection />
-        <MainJsonSection />
-        <RecipeList />
-        <EditButton />
+        <StoreInitializer>
+          <QuerySection />
+          <MainJsonSection />
+          <RecipeList />
+          <EditButton />
+        </StoreInitializer>
       </ErrorBoundary>
     </div>
   );

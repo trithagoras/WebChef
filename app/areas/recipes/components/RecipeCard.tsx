@@ -4,7 +4,7 @@ import { faClock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReactCodeMirror from "@uiw/react-codemirror";
 import { EditorView } from "codemirror";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { editableTheme } from "../../json/CodeEditorThemes";
 import { useEditMode } from "../../shared/stores/editModeStore";
 import RecipeModal from "./RecipeModal";
@@ -12,7 +12,7 @@ import useJsonStore from "../../json/stores/jsonStore";
 import Skeleton from "react-loading-skeleton";
 
 const RecipeCard = ({ index }: { index: number }) => {
-  const { json, setJson, init, isInit } = useJsonStore();
+  const { json, setJson, loading } = useJsonStore();
   const { isEditing } = useEditMode();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -20,10 +20,6 @@ const RecipeCard = ({ index }: { index: number }) => {
     () => [jsonLanguage.extension, editableTheme, EditorView.editable.of(true)],
     []
   );
-
-  useEffect(() => {
-    init();
-  }, [init]);
 
   const parsedJson = useMemo(() => {
     try {
@@ -38,7 +34,7 @@ const RecipeCard = ({ index }: { index: number }) => {
     return null;
   }, [json, index]);
 
-  if (!isInit) {
+  if (loading) {
     return <Skeleton height={100} />;
   }
 

@@ -39,6 +39,7 @@ const useStorage = (key: StorageKey) => {
     const fetchRemoteValue = async () => {
       if (!useEndpoint || !endpoint) {
         setValue(localValue);
+        setIsLoading(false);
         return;
       }
 

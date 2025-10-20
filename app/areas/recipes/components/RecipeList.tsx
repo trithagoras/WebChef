@@ -11,20 +11,21 @@ import useJsonStore from "../../json/stores/jsonStore";
 import Skeleton from "react-loading-skeleton";
 
 const RecipeList = () => {
-  const { json, setJson, isInit, init } = useJsonStore();
+  const { json, setJson, loading } = useJsonStore();
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [showShoppingListModal, setShowShoppingListModal] = useState(false);
   const [shoppingList, setShoppingList] = useState<ShoppingListItem[]>([]);
   const { isEditing } = useEditMode();
 
   useEffect(() => {
-    if (!isInit) return;
+    if (loading) return;
     try {
       setRecipes(JSON.parse(json));
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
-      
+      // don't update recipe list if json is busted
     }
-  }, [isInit, json]);
+  }, [loading, json]);
 
   const makeShoppingList = useCallback((recipes: Recipe[]) => {
     const getAmounts = (name: string) => {
@@ -72,12 +73,8 @@ const RecipeList = () => {
     }
   }, [recipes, makeShoppingList]);
 
-  useEffect(() => {
-    init();
-  }, [init]);
-
-  if (!isInit) {
-    return <Skeleton height={100} />;
+  if (loading) {
+    return <Skeleton height={400} />;
   }
 
   const deleteRecipe = (index: number) => {

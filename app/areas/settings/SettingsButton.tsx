@@ -15,8 +15,8 @@ const SettingsButton = () => {
   const [, saveJson] = useLocalStorage<string>("recipesJson");
   const [, saveQuery] = useLocalStorage<string>("queryText");
 
-  const [useEndpoint, setUseEndpoint] = useState(savedUseEndpoint);
-  const [endpoint, setEndpoint] = useState(savedEndpoint);
+  const [useEndpoint, setUseEndpoint] = useState(savedUseEndpoint ?? false);
+  const [endpoint, setEndpoint] = useState(savedEndpoint ?? '');
 
   const handleSave = () => {
     saveUseEndpoint(useEndpoint);
@@ -27,8 +27,8 @@ const SettingsButton = () => {
 
   const handleCancel = () => {
     setIsModalOpen(false);
-    setUseEndpoint(savedUseEndpoint);
-    setEndpoint(savedEndpoint);
+    setUseEndpoint(savedUseEndpoint ?? false);
+    setEndpoint(savedEndpoint ?? '');
   };
 
   const handleDeleteLocalData = () => {

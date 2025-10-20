@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { getStorageItem } from "../../shared/hooks/useStorage";
 
 interface QueryState {
   queryText: string;
@@ -8,11 +7,11 @@ interface QueryState {
   refreshPreviousQueryText: () => void;
   textAreaKey: number; // for refreshing state
   incrementTextAreaKey: () => void;
-  isInit: boolean;
-  init: () => void;
+  loading: boolean;
+  setLoading: (value: boolean) => void;
 }
 
-const useQueryStore = create<QueryState>()((set, get) => {
+const useQueryStore = create<QueryState>()((set) => {
   return {
     queryText: "",
     setQueryText: (value) => set(() => ({ queryText: value })),
@@ -22,11 +21,8 @@ const useQueryStore = create<QueryState>()((set, get) => {
     textAreaKey: 0,
     incrementTextAreaKey: () =>
       set((state) => ({ textAreaKey: state.textAreaKey + 1 })),
-    isInit: false,
-    init: async () => {
-      if (get().isInit) return;
-      set({ queryText: await getStorageItem("queryText"), previousQueryText: await getStorageItem("queryText"), isInit: true });
-    }
+    loading: true,
+    setLoading: (value: boolean) => set(() => ({ loading: value }))
   };
 });
 

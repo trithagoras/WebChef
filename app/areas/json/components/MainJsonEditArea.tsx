@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { jsonLanguage } from "@codemirror/lang-json";
 import ReactCodeMirror, { EditorView } from "@uiw/react-codemirror";
 import { editableTheme, readOnlyTheme } from "../CodeEditorThemes";
@@ -12,8 +12,7 @@ const MainJsonEditArea = () => {
   const {
       json,
       setJson,
-      init,
-      isInit
+      loading
     } = useJsonStore();
     const { isEditing } = useEditMode();
 
@@ -27,11 +26,7 @@ const MainJsonEditArea = () => {
     [isEditing]
   );
 
-  useEffect(() => {
-    init();
-  }, [init]);
-
-  if (!isInit) {
+  if (loading) {
     return <Skeleton height={200} />
   }
 

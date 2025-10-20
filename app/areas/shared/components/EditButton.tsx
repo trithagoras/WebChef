@@ -12,31 +12,21 @@ import { masterQuery } from "../framework/query";
 import fakeData from "../framework/fakeData";
 import toast from "react-hot-toast";
 import useJsonStore from "../../json/stores/jsonStore";
-import { useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
 import useStorage from "../hooks/useStorage";
 import { Recipe } from "../framework/schema";
 
 const EditButton = () => {
   const { isEditing, toggleEditMode } = useEditMode();
-  const { json, setJson, refreshPreviousJson, init: jsonInit, isInit: isJsonInit, previousJson } = useJsonStore();
-  const { queryText, setQueryText, refreshPreviousQueryText, previousQueryText, incrementTextAreaKey, init: queryInit, isInit: isQueryInit } = useQueryStore();
+  const { json, setJson, refreshPreviousJson, previousJson, loading: loadingJson } = useJsonStore();
+  const { queryText, setQueryText, refreshPreviousQueryText, previousQueryText, incrementTextAreaKey, loading: loadingQuery } = useQueryStore();
 
-  const {value: savedQuery, saveValue: saveQuery, error: queryError} = useStorage("queryText");
-  const {value: savedJson, saveValue: saveJson, error: jsonError} = useStorage("recipesJson");
+  const {value: savedQuery, saveValue: saveQuery } = useStorage("queryText");
+  const {value: savedJson, saveValue: saveJson } = useStorage("recipesJson");
 
-  useEffect(() => {
-    jsonInit();
-    queryInit()
-  }, [jsonInit, queryInit]);
+  const isLoading = loadingJson || loadingQuery;
 
-  if (queryError || jsonError) {
-    throw new Error("Error retrieving saved values");
-  }
-
-  const isInit = isJsonInit && isQueryInit;
-
-  if (!isInit) {
+  if (isLoading) {
     return <Skeleton height={20} />;
   }
 
