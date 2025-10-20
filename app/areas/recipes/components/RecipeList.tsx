@@ -8,17 +8,23 @@ import { faList, faX } from "@fortawesome/free-solid-svg-icons";
 import ShoppingListModal from "./ShoppingListModal";
 import { useEditMode } from "../../shared/stores/editModeStore";
 import useJsonStore from "../../json/stores/jsonStore";
+import Skeleton from "react-loading-skeleton";
 
 const RecipeList = () => {
-  const { json, setJson } = useJsonStore();
+  const { json, setJson, isInit, init } = useJsonStore();
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [showShoppingListModal, setShowShoppingListModal] = useState(false);
   const [shoppingList, setShoppingList] = useState<ShoppingListItem[]>([]);
   const { isEditing } = useEditMode();
 
   useEffect(() => {
-    setRecipes(JSON.parse(json));
-  }, [json]);
+    if (!isInit) return;
+    try {
+      setRecipes(JSON.parse(json));
+    } catch (err) {
+      
+    }
+  }, [isInit, json]);
 
   const makeShoppingList = useCallback((recipes: Recipe[]) => {
     const getAmounts = (name: string) => {
@@ -65,6 +71,14 @@ const RecipeList = () => {
       setShoppingList([]);
     }
   }, [recipes, makeShoppingList]);
+
+  useEffect(() => {
+    init();
+  }, [init]);
+
+  if (!isInit) {
+    return <Skeleton height={100} />;
+  }
 
   const deleteRecipe = (index: number) => {
     const updated = [...recipes];

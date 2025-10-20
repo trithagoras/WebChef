@@ -1,58 +1,47 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
+import { StorageKey } from "./useStorage";
 
-export type LocalStorageKey = "recipesJson" | "queryText" | "useDb" | "connectionString";
+export type LocalStorageKey = "useEndpoint" | "endpoint" | StorageKey;
 
 export const getLocalStorageItem = <T>(key: LocalStorageKey) => {
   const res = window.localStorage.getItem(key);
-  if (res) {
-    try {
-      return JSON.parse(res) as T;
-    } catch (err) {
-      console.log(err);
-      // TODO: something here...
-    }
+  if (res === null) return undefined;
+  try {
+    return JSON.parse(res) as T;
+  } catch (err) {
+    console.log(err);
   }
   return undefined;
 };
 
-const useLocalStorage = <T>(
-  storageKey: LocalStorageKey,
-  initialValue: T
-): [T, (newValue: T | undefined) => void] => {
-  const [value, setValue] = useState<T>(initialValue);
+const useLocalStorage = <T>(storageKey: LocalStorageKey): [T | undefined, (newValue: T | undefined) => void] => {
+  const readValue = (): T | undefined => {
+    if (typeof window === "undefined") return undefined;
+    try {
+      const item = window.localStorage.getItem(storageKey);
+      return item ? JSON.parse(item) : undefined;
+    } catch (error) {
+      console.error("Error reading from localStorage:", error);
+      return undefined;
+    }
+  };
+
+  const [value, setValue] = useState<T | undefined>(readValue);
 
   const saveValue = useCallback((newValue: T | undefined) => {
     if (typeof window === "undefined") return;
-
     if (newValue === undefined) {
       window.localStorage.removeItem(storageKey);
-      setValue(initialValue);
-      return;
-    }
-
-    try {
-      const s = JSON.stringify(newValue);
-      window.localStorage.setItem(storageKey, s);
-      setValue(newValue);
-    } catch (error) {
-      console.error("Error writing to localStorage:", error);
-    }
-  }, [initialValue, storageKey]);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    try {
-      const item = window.localStorage.getItem(storageKey);
-      if (item !== null) {
-        setValue(JSON.parse(item));
+      setValue(undefined);
+    } else {
+      try {
+        window.localStorage.setItem(storageKey, JSON.stringify(newValue));
+        setValue(newValue);
+      } catch (error) {
+        console.error("Error writing to localStorage:", error);
       }
-    } catch (error) {
-      console.error("Error reading from localStorage:", error);
-      // clears the localStorage value - destructive!
-      saveValue(undefined);
     }
-  }, [saveValue, storageKey]);
+  }, [storageKey]);
 
   return [value, saveValue];
 };

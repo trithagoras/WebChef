@@ -5,6 +5,7 @@ import RecipeList from "./areas/recipes/components/RecipeList";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import EditButton from "./areas/shared/components/EditButton";
 import SettingsButton from "./areas/settings/SettingsButton";
+import ErrorBoundary from "./areas/shared/components/ErrorBoundary";
 
 export default function Home() {
   return (
@@ -26,10 +27,12 @@ export default function Home() {
           View the shopping list to see all needed ingredients aggregated from all recipes.
         </p>
       </div>
-      <QuerySection />
-      <MainJsonSection />
-      <RecipeList />
-      <EditButton />
+      <ErrorBoundary>
+        <QuerySection />
+        <MainJsonSection />
+        <RecipeList />
+        <EditButton />
+      </ErrorBoundary>
     </div>
   );
 }

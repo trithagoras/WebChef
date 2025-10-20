@@ -10,8 +10,11 @@ const MainJsonSection = () => {
   }
 
   return (
-    <div className="bg-gray-200 p-6 rounded-lg shadow-lg">
-      <MainJsonEditArea />
+    <div>
+      <h2 className="text-xl font-semibold mb-2">Import recipes</h2>
+      <div className="bg-gray-200 p-6 rounded-lg shadow-lg">
+        <MainJsonEditArea />
+      </div>
     </div>
   );
 };

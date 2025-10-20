@@ -1,6 +1,5 @@
 import { create } from "zustand";
-import { masterQuery } from "../../shared/framework/query";
-import { getLocalStorageItem } from "../../shared/hooks/useLocalStorage";
+import { getStorageItem } from "../../shared/hooks/useStorage";
 
 interface QueryState {
   queryText: string;
@@ -9,27 +8,25 @@ interface QueryState {
   refreshPreviousQueryText: () => void;
   textAreaKey: number; // for refreshing state
   incrementTextAreaKey: () => void;
+  isInit: boolean;
+  init: () => void;
 }
 
-const getInitialQuery = () => {
-  if (typeof window !== "undefined") {
-    return getLocalStorageItem<string>("queryText") ?? masterQuery;
-  }
-  return masterQuery;
-};
-
-const useQueryStore = create<QueryState>()((set) => {
-  const initialQuery = getInitialQuery();
-
+const useQueryStore = create<QueryState>()((set, get) => {
   return {
-    queryText: initialQuery,
+    queryText: "",
     setQueryText: (value) => set(() => ({ queryText: value })),
-    previousQueryText: initialQuery,
+    previousQueryText: "",
     refreshPreviousQueryText: () =>
       set((state) => ({ previousQueryText: state.queryText })),
     textAreaKey: 0,
     incrementTextAreaKey: () =>
       set((state) => ({ textAreaKey: state.textAreaKey + 1 })),
+    isInit: false,
+    init: async () => {
+      if (get().isInit) return;
+      set({ queryText: await getStorageItem("queryText"), previousQueryText: await getStorageItem("queryText"), isInit: true });
+    }
   };
 });
 

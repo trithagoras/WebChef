@@ -1,31 +1,28 @@
 import { create } from "zustand";
-import fakeData from "../../shared/framework/fakeData";
-import { getLocalStorageItem } from "../../shared/hooks/useLocalStorage";
+import { getStorageItem } from "../../shared/hooks/useStorage";
 
 interface JsonState {
   json: string;
   setJson: (value: string) => void;
   previousJson: string;
   refreshPreviousJson: () => void;
+  isInit: boolean;
+  init: () => void;
 }
 
-const getInitialJson = () => {
-  if (typeof window !== "undefined") {
-    return getLocalStorageItem<string>("recipesJson") ?? fakeData;
-  }
-  return fakeData;
-};
-
-const useJsonStore = create<JsonState>((set) => {
-  const initialJson = getInitialJson();
-
+const useJsonStore = create<JsonState>((set, get) => {
   return {
-    json: initialJson,
-    previousJson: initialJson,
+    json: "[]",
+    previousJson: "[]",
     setJson: (value: string) => {
       set(() => ({ json: value }));
     },
-    refreshPreviousJson: () => set((state) => ({ previousJson: state.json }))
+    refreshPreviousJson: () => set((state) => ({ previousJson: state.json })),
+    isInit: false,
+    init: async () => {
+      if (get().isInit) return;
+      set({ previousJson: await getStorageItem("recipesJson") ?? "[]", json: await getStorageItem("recipesJson") ?? "[]", isInit: true });
+    }
   };
 });
 

@@ -4,15 +4,15 @@ import { faClock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReactCodeMirror from "@uiw/react-codemirror";
 import { EditorView } from "codemirror";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { editableTheme } from "../../json/CodeEditorThemes";
-import { Recipe } from "../../shared/framework/schema";
 import { useEditMode } from "../../shared/stores/editModeStore";
 import RecipeModal from "./RecipeModal";
 import useJsonStore from "../../json/stores/jsonStore";
+import Skeleton from "react-loading-skeleton";
 
 const RecipeCard = ({ index }: { index: number }) => {
-  const { json, setJson } = useJsonStore();
+  const { json, setJson, init, isInit } = useJsonStore();
   const { isEditing } = useEditMode();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -20,6 +20,27 @@ const RecipeCard = ({ index }: { index: number }) => {
     () => [jsonLanguage.extension, editableTheme, EditorView.editable.of(true)],
     []
   );
+
+  useEffect(() => {
+    init();
+  }, [init]);
+
+  const parsedJson = useMemo(() => {
+    try {
+      const parsed = JSON.parse(json);
+      if (Array.isArray(parsed)) {
+        return parsed[index] || null;
+      }
+    } catch (e) {
+      console.error("Invalid JSON", e);
+    }
+
+    return null;
+  }, [json, index]);
+
+  if (!isInit) {
+    return <Skeleton height={100} />;
+  }
 
   const handleChange = (newRecipeJson: string) => {
     try {
@@ -36,16 +57,7 @@ const RecipeCard = ({ index }: { index: number }) => {
     }
   };
 
-  // derive live recipe data from the main JSON
-  let recipe: Recipe | null = null;
-  try {
-    const parsed = JSON.parse(json);
-    if (Array.isArray(parsed)) {
-      recipe = parsed[index];
-    }
-  } catch (e) {
-    console.error("Invalid JSON", e);
-  }
+  const recipe = parsedJson;
 
   if (!recipe) {
     return null;
